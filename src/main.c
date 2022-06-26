@@ -14,8 +14,9 @@ int main(void) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 
 
-	t_ricetta ricetta = input_ricetta();
-	print_ricetta(ricetta);
+	puts("lololol\nlololol");
+	//t_ricetta ricetta = input_ricetta();
+	//print_ricetta(ricetta);
 
 	return 0;
 }

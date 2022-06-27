@@ -16,7 +16,7 @@ int main(void) {
 	//t_alimento alimento = input_alimento();
 	//print_alimento(alimento);
 
-	//aggiungi_alimenti();
+	aggiungi_alimenti();
 
 
 	print_alimenti();

@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 // restituisce un file aperto
-void apriFile(FILE** file, char* file_name, char* mode);
+int apriFile(FILE** file, char* file_name, char* mode);
 
 
 #endif /* UTILS_H_ */

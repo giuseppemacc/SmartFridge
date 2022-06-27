@@ -1,9 +1,13 @@
-
 #include "file_names.h"
 #include "types.h"
 #include "utils.h"
 #include <stdio.h>
 #include <string.h>
+//TODO: migliorare i messaggi all' utente (es: "inserisci questo ...")
+//TODO: aggiungere i controlli di inserimento int, string, ecc. ad es
+//       creando delle funzioni in utils come inputInt(), inputString(), ... che
+//       gestiscono i vari casi
+
 
 
 void print_alimento(t_alimento alimento){
@@ -13,14 +17,14 @@ void print_alimento(t_alimento alimento){
   puts("");
 }
 
+
+//TODO: visualizzare gli alimenti in ordine alfabetico
 void print_alimenti(){
   t_alimento alimento_corrente;
   FILE* file_alimenti;
 
 
-  apriFile(&file_alimenti, FILENAME_ALIMENTI, "rb+");
-
-  	if(!(file_alimenti == NULL)){
+  	if( apriFile(&file_alimenti, FILENAME_ALIMENTI, "rb+") ){
   		rewind(file_alimenti);
   		fread( &alimento_corrente, sizeof(t_alimento), 1, file_alimenti);
 
@@ -30,12 +34,18 @@ void print_alimenti(){
   			 }
   		  fread( &alimento_corrente, sizeof(t_alimento), 1, file_alimenti);
   		}
+
+  		fclose(file_alimenti);
   	}
 
-  	fclose(file_alimenti);
+
 }
 
 
+//TODO: sistemare quantità/peso (cioè come e quando far inserire uno dei due)
+/* voglio comunque tenere i campi quantià e peso in t_alimenti perchè ci
+  semplificheranno la vita dopo
+*/
 t_alimento input_alimento(){
   t_alimento alimento;
 
@@ -59,9 +69,7 @@ void aggiungi_alimenti(){
   FILE* file_alimenti; //frigo
 
 
-	apriFile(&file_alimenti, FILENAME_ALIMENTI, "rb+");
-
-	if(!(file_alimenti == NULL)){
+	if( apriFile(&file_alimenti, FILENAME_ALIMENTI, "rb+") ){
 
 	  fseek(file_alimenti, 0, SEEK_END); // posiziona alla fine
 
@@ -74,11 +82,14 @@ void aggiungi_alimenti(){
   		scanf("%d", &input);
 
   	  }while(input == 1);
+  	  fclose(file_alimenti);
 	}
 
-	fclose(file_alimenti);
 }
 
+//TODO: aggiungere ricerca su sottostringa (?? e forse cercavi ... ??)
+/*dato che dobbiamo visualizzare gli alimenti in ordine alfabetico possiamo
+ * pensare di ordinare direttamente il file_alimenti e usare qui la ricerca binaria*/
 int ricerca_alimento(char* nome, t_alimento* alimento, FILE* file_alimenti){
 	int flag_alimento_trovato=0;
 	t_alimento alimento_corrente;
@@ -91,7 +102,7 @@ int ricerca_alimento(char* nome, t_alimento* alimento, FILE* file_alimenti){
 	  if( strcmp(alimento_corrente.nome, nome)==0 ){
 		  flag_alimento_trovato=1;
 		  *alimento = alimento_corrente;
-		  fseek(file_alimenti, -1*sizeof(t_alimento), SEEK_CUR);
+		  fseek(file_alimenti, -1*sizeof(t_alimento), SEEK_CUR);//sposta di uno indietro
 	  }else{
 		  fread( &alimento_corrente, sizeof(t_alimento), 1, file_alimenti);
 	  }
@@ -99,6 +110,8 @@ int ricerca_alimento(char* nome, t_alimento* alimento, FILE* file_alimenti){
 	return flag_alimento_trovato;
 }
 
+
+//TODO: chiedere all utente di modificare l'alimento e modificarlo
 void modifica_alimenti(){
 	int input;
 	char str[50];
@@ -110,38 +123,42 @@ void modifica_alimenti(){
 		printf("Inserisci il nome dell'alimento da modificare/rimuovere >> ");
 		scanf("%s", str);
 
-		//TODO: se (apriFile == 1) { ... } //anche agli altri
-		apriFile(&file_alimenti, FILENAME_ALIMENTI, "r+");
+		if( apriFile(&file_alimenti, FILENAME_ALIMENTI, "r+") ){
 
-		if(ricerca_alimento(str, &alimento, file_alimenti)){
+			if( ricerca_alimento(str, &alimento, file_alimenti) ){
 
-			print_alimento(alimento);
-			puts("[1] elimina alimento");
-			puts("[2] modifica alimento");
-			scanf("%d",&input);
+				print_alimento(alimento);
+				puts("[1] elimina alimento");
+				puts("[2] modifica alimento");
+				scanf("%d",&input);
 
-			if(input == 1){
-				strcpy(alimento.nome,"");
+				// elimina alimento
+				if(input == 1){
+					strcpy(alimento.nome,"");
+				}
+
+				// modifica alimento
+				if(input == 2){
+					//TODO: chiedere qui all utente cosa e di quanto modificare
+					alimento.quantita += 100;
+				}
+
+				fwrite( &alimento, sizeof(t_alimento), 1, file_alimenti);
+
+			}else{
+				puts("alimento non trovato");
 			}
-			if(input == 2){
-				//TODO: far decidere cosa e di quanto modificare
-				alimento.quantita += 100;
-			}
 
-			fwrite( &alimento, sizeof(t_alimento), 1, file_alimenti);
+			fclose(file_alimenti);
 
-		}else{
-			puts("alimento non trovato");
 		}
-
-		fclose(file_alimenti);
 
 		print_alimenti();
 
-		printf("Modificare un altro alimento? [si:1, no:0] >> ");
+		printf("Modificare/Eliminare un altro alimento? [si:1, no:0] >> ");
 		scanf("%d", &input);
+
 	}while(input==1);
 
-
-
 }
+

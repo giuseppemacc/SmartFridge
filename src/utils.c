@@ -1,17 +1,50 @@
 #include <stdio.h>
+// ??TODO?? ordina file
 
-// apri il file se non è già aperto
-//TODO: ritorna 1 se aperto correttamente
-void apriFile(FILE** file, char* file_name, char* mode){
+
+
+// ??TODO?? apri il file se non è già aperto
+int apriFile(FILE** file, char* file_name, char* mode){
+	int flag_open=0;
 
 	*file = fopen(file_name, mode);
 
 	if ((*file) == NULL){
 	       puts("file non trovato");
 	 }else{
-		 puts(".");
+		 puts("."); //TODO: da togliere poi serve solo per capire che è andato tutto bene
+		 flag_open=1;
 	 }
+	return flag_open;
 }
+
+
+
+
+/*    === PATTERN PER USARE I FILE ===
+ *
+ * FILE* file;
+ *
+ * if( apriFile(&file, FILENAME_ALIMENTI, "rb+") ){
+ *
+ *
+ * 	// .... istruzioni che operano sul file ....
+ *
+ *
+ * 	fclose(file);
+ *
+ * }
+ *
+ * */
+
+
+
+
+
+
+
+
+
 
 
 

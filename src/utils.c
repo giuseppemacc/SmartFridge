@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 // ??TODO?? ordina file
 
 
@@ -18,6 +20,21 @@ int apriFile(FILE** file, char* file_name, char* mode){
 	return flag_open;
 }
 
+
+
+//TODO: capire come funziona perchè ho copiato e incollato
+void strToUpper(char * str) {
+  char * name;
+  name = strtok(str,":");
+
+  // Convert to upper case
+  char *s = name;
+  while (*s) {
+    *s = toupper((unsigned char) *s);
+    s++;
+  }
+
+}
 
 
 

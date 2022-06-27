@@ -10,4 +10,6 @@
 int apriFile(FILE** file, char* file_name, char* mode);
 
 
+void strToUpper(char * str);
+
 #endif /* UTILS_H_ */

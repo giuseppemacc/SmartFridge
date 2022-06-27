@@ -4,8 +4,8 @@
 
 
 typedef enum{
-	CARNE, PESCE, VERDURE, PASTA
-} categorie;
+	NONE, CARNE, PESCE, VERDURE, PASTA
+} categorie; //TODO: cambiare in t_categoria
 
 typedef struct {
 	char nome[50];

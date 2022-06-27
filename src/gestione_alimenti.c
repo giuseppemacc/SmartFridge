@@ -5,7 +5,7 @@
 #include <string.h>
 //TODO: migliorare i messaggi all' utente (es: "inserisci questo ...")
 //TODO: aggiungere i controlli di inserimento int, string, ecc. ad es
-//       creando delle funzioni in utils come inputInt(), inputString(), ... che
+//       creando delle funzioni in utils.c come inputInt(), inputString(), ... che
 //       gestiscono i vari casi
 
 

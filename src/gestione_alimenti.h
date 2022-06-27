@@ -11,8 +11,6 @@ t_alimento input_alimento();
 void aggiungi_alimenti();
 
 
-void rimuovi_alimenti();
-
 void modifica_alimenti();
 
 int ricerca_alimento(char* nome, t_alimento* alimento, FILE* file_alimenti);

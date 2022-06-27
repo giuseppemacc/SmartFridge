@@ -16,18 +16,25 @@ int main(void) {
 	//t_alimento alimento = input_alimento();
 	//print_alimento(alimento);
 
-	aggiungi_alimenti();
+	//aggiungi_alimenti();
 
 
-	print_alimenti();
+	//print_alimenti();
 
-	modifica_alimenti();
+	//modifica_alimenti();
 
 
-	print_alimenti();
+	//print_alimenti();
+	/*char str[] = "carne";
+	categorie cat = getCategoria(str);
+	printf("%d\n",cat);*/
 
 	//t_ricetta ricetta = input_ricetta();
 	//print_ricetta(ricetta);
+	print_ricette();
+	//aggiungi_ricette();
+	modifica_ricette();
+	print_ricette();
 
 	return 0;
 }
